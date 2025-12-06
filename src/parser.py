@@ -4,6 +4,8 @@ import re
 from datetime import datetime, timedelta
 import dateparser as dp
 from dateutil import parser as dateutil_parser
+import re
+import unicodedata
 
 REFERENCE_DATE = datetime.now()  # ensures consistent relative parsing
 
@@ -91,23 +93,41 @@ def normalize_amount(value: str) -> float:
     s = re.sub(r"[^\d\-.]", "", str(value))  # strip currency symbols and spaces
     return float(s) if s else 0.0
 
+def clean_merchant(name: str) -> str:
+    if not isinstance(name, str) or not name.strip():
+        return "unknown"
+    
+    # Lowercase
+    name = name.lower()
+    # Remove accents (like McDonald’s apostrophe)
+    name = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore').decode()
+    # Remove punctuation, stray symbols, emojis, store numbers
+    name = re.sub(r"[^a-z\s]", " ", name)
+    # Collapse extra whitespace
+    name = re.sub(r"\s+", " ", name).strip()
+    return name
+
 def normalize_merchant(name: str) -> str:
-    if not isinstance(name, str):
-        return "Unknown"
+    cleaned = clean_merchant(name)
 
-    lower = name.lower()
-
-    # Group messy naming into canonical merchants
-    if "uber" in lower:
-        if "eats" in lower:
-            return "Uber Eats"
+    if "uber eats" in cleaned:
+        return "Uber Eats"
+    if "uber" in cleaned:
         return "Uber"
-    if "starbucks" in lower:
+    if "starbucks" in cleaned:
         return "Starbucks"
-    if "amzn" in lower or "amazon" in lower:
+    if "amzn" in cleaned or "amazon" in cleaned:
         return "Amazon"
+    if "mcdonald" in cleaned:
+        return "McDonald's"
+    if "trader joe" in cleaned:
+        return "Trader Joe's"
 
-    return name.title().strip()
+    # Fallback: title case original for analytics visibility
+    if isinstance(name, str) and name.strip():
+        return name.title().strip()
+
+    return "Unknown"
 
 def apply_category(merchant: str) -> str:
     if not isinstance(merchant, str):

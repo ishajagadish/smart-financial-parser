@@ -1,0 +1,6 @@
+date,merchant,amount,category
+2023-01-01,Uber,13.42,Transport
+2023-01-01,Uber,24.99,Transport
+2023-01-02,Uber Eats,-15.0,Transport
+2023-03-05,Starbucks,5.4,Food & Dining
+2023-03-07,Amazon,120.0,Shopping

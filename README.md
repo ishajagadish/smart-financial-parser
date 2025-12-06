@@ -20,6 +20,7 @@ This project solves the challenge of normalizing **inconsistent** transaction da
 | Merchant normalization | "UBER *TRIP" → "Uber" | Canonical grouping for analytics |
 | Auto-category mapping | Uber → Transport | Immediate insights |
 | Safe handling of malformed data | Unknown fields preserved | No crashes, auditable pipeline |
+| Scalable category classification | AMC → Entertainment, Whole Foods → Grocery | Required for “Top Spending Category” analytics; rule-based and easy to extend |
 
 🛡️ Cybersecurity mindset: **Never drop data**, always preserve visibility.
 
@@ -35,7 +36,7 @@ pip3 install -r requirements.txt
 
 ## 🚀 Usage (CLI)
 ```bash
-python3 src/main.py --input data/sample_raw.csv --output data/output_normalized.csv
+python3 src/main.py --input data/sample_raw.csv --output data/normalized.csv
 ```
 
 ## 🧪 Testing

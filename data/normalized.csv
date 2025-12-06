@@ -4,7 +4,7 @@ date,merchant,amount,category
 2025-12-12,Starbucks,5.0,Food & Dining
 2025-12-02,Uber Eats,-8.99,Transport
 2025-12-03,Amazon,120.0,Shopping
-2025-12-04,Pizza Town 🍕,10.0,Other
+2025-12-04,Pizza Town 🍕,10.0,Food & Dining
 2025-11-28,Starbucks,4.5,Food & Dining
 2025-12-07,Uber,14.0,Transport
 2025-11-14,Random Store,42.0,Other
@@ -12,12 +12,12 @@ date,merchant,amount,category
 2025-12-01,Amazon,35.15,Shopping
 2025-11-29,,22.22,Other
 Unknown,Unknown,0.0,Other
-2023-05-13,Pizza Town 🍕,10.0,Other
+2023-05-13,Pizza Town 🍕,10.0,Food & Dining
 2023-03-07,Uber,33.0,Transport
 2023-03-05,Starbucks,5.4,Food & Dining
 2023-01-02,Uber Eats,-15.0,Transport
 2023-01-01,Uber,24.99,Transport
 2023-01-01,Uber,13.42,Transport
 Unknown,Unknown Merchant,100.0,Other
-2024-04-05,Etsy,20.0,Other
+2024-04-05,Etsy,20.0,Shopping
 2025-12-05,Weird Year,49.99,Other

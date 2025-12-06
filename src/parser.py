@@ -17,12 +17,14 @@ WEEKDAYS = {
     "sunday": 6,
 }
 
-# Simple merchant → category mapping
-CATEGORY_MAP = {
-    "uber": "Transport",
-    "uber eats": "Food & Dining",
-    "starbucks": "Food & Dining",
-    "amazon": "Shopping",
+# Category mappings are rule-based and easily expandable for real-world merchant scale.
+# Future versions: ML classifier or embeddings for semantic grouping.
+CATEGORY_RULES = {
+    "Transport": ["uber", "lyft", "taxi", "gas", "shell", "chevron"],
+    "Entertainment": ["amc", "spotify", "netflix", "theatre", "cinema"],
+    "Food & Dining": ["starbucks", "mcdonald", "burger", "pizza", "restaurant", "cafe", "eat"],
+    "Shopping": ["amazon", "walmart", "target", "best buy", "etsy", "mall"],
+    "Grocery": ["whole foods", "safeway", "kroger", "costco", "trader joe"],
 }
 
 def load_raw_transactions(path: Path) -> pd.DataFrame:
@@ -108,9 +110,11 @@ def normalize_merchant(name: str) -> str:
     return name.title().strip()
 
 def apply_category(merchant: str) -> str:
+    if not isinstance(merchant, str):
+        return "Other"
     lower = merchant.lower()
-    for key, category in CATEGORY_MAP.items():
-        if key in lower:
+    for category, keywords in CATEGORY_RULES.items():
+        if any(keyword in lower for keyword in keywords):
             return category
     return "Other"
 

@@ -69,3 +69,10 @@ def test_normalize_date_last_sunday():
     expected = (today - timedelta(days=diff)).strftime("%Y-%m-%d")
 
     assert normalize_date("last Sunday") == expected
+
+def test_apply_category():
+    assert apply_category("Uber") == "Transport"
+    assert apply_category("Starbucks #1234") == "Food & Dining"
+    assert apply_category("AMC Theatres") == "Entertainment"
+    assert apply_category("Whole Foods Market") == "Grocery"
+    assert apply_category("Random Boutique") == "Other"

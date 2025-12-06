@@ -1,11 +1,23 @@
 date,merchant,amount
-2023-01-01,UBER *TRIP,$13.42
-Jan 1st 23,Uber Technologies, USD 24.99
-01/02/23,UBER EATS,-$15.00
-2023/03/05,Starbucks #104, 5.4
-3-7-2023,AMZN Mktp US*AB12,$120.00
-13.05.23,Pizza Town 🍕, 10$   
 Yesterday,Uber Ride,$12?
-next Friday,,5.50
+last Sunday,,15.50
+next Friday,Starbucks,$5.00
+THIS tuesday,UBER EATS, -$8.99
+past Wednesday,AMZN Mktp US*PLQF,120.00
+previous thursday,Pizza Town 🍕,10$   
+1 week ago,Starbucks #302,4.5
+In 2 days,Uber,14.00
+3 Weeks Ago,Random Store, USD 42.00
+Tomorrow,, $7.99
+this monday,amazon.com//$,#35.15
+last         Saturday,   ,$22.22
 ,,bad data
-2023-04-01,Random Store,Something weird
+13.05.23,Pizza Town 🍕, 10$   
+3-7-2023,Uber,$33
+2023/03/05,Starbucks #104, 5.4
+01/02/23,UBER EATS,-$15.00
+Jan 1st 23,Uber Technologies, USD 24.99
+2023-01-01,UBER *TRIP,$13.42
+  ,Unknown Merchant,$100.00
+April 2024,Etsy,20.00
+2025,Weird Year,49.99

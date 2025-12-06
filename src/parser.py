@@ -1,7 +1,21 @@
 from pathlib import Path
-from dateutil import parser as dateparser
 import pandas as pd
 import re
+from datetime import datetime, timedelta
+import dateparser as dp
+from dateutil import parser as dateutil_parser
+
+REFERENCE_DATE = datetime.now()  # ensures consistent relative parsing
+
+WEEKDAYS = {
+    "monday": 0,
+    "tuesday": 1,
+    "wednesday": 2,
+    "thursday": 3,
+    "friday": 4,
+    "saturday": 5,
+    "sunday": 6,
+}
 
 # Simple merchant → category mapping
 CATEGORY_MAP = {
@@ -16,11 +30,58 @@ def load_raw_transactions(path: Path) -> pd.DataFrame:
     return df
 
 def normalize_date(date_str: str) -> str:
+    if not isinstance(date_str, str) or not date_str.strip():
+        return "Unknown"
+
+    text = date_str.strip().lower()
+
+    # Custom logic for "<modifier> <weekday>"
+    parts = text.split()
+    if len(parts) >= 2:
+        modifier, weekday = parts[0], parts[1]
+        if weekday in WEEKDAYS:
+            today_idx = REFERENCE_DATE.weekday()
+            target_idx = WEEKDAYS[weekday]
+
+            if modifier == "next":
+                diff = (target_idx - today_idx + 7) % 7
+                if diff == 0:
+                    diff = 7
+                dt = REFERENCE_DATE + timedelta(days=diff)
+                return dt.strftime("%Y-%m-%d")
+
+            if modifier in {"last", "previous", "past"}:
+                diff = (today_idx - target_idx + 7) % 7
+                if diff == 0:
+                    diff = 7
+                dt = REFERENCE_DATE - timedelta(days=diff)
+                return dt.strftime("%Y-%m-%d")
+
+            if modifier == "this":
+                diff = target_idx - today_idx
+                dt = REFERENCE_DATE + timedelta(days=diff)
+                return dt.strftime("%Y-%m-%d")
+
+    # Natural language (+ require valid settings)
+    dt = dp.parse(
+        date_str,
+        settings={
+            "RELATIVE_BASE": REFERENCE_DATE,
+            "PREFER_DATES_FROM": "past",
+            "RETURN_AS_TIMEZONE_AWARE": False,
+            "STRICT_PARSING": True,
+            "NORMALIZE": True,
+        }
+    )
+    if dt:
+        return dt.strftime("%Y-%m-%d")
+
+    # Fallback parser for strict formats
     try:
-        dt = dateparser.parse(date_str, fuzzy=True)
+        dt = dateutil_parser.parse(date_str, fuzzy=True)
         return dt.strftime("%Y-%m-%d")
     except Exception:
-        return None  # signal for missing/invalid
+        return "Unknown"
 
 def normalize_amount(value: str) -> float:
     if pd.isna(value):
@@ -63,9 +124,6 @@ def normalize_transactions(df: pd.DataFrame) -> pd.DataFrame:
 
     # Add category
     df["category"] = df["merchant"].apply(apply_category)
-
-    # Drop invalid rows
-    df = df[df["date"].notna()]
 
     return df
 

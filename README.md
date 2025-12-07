@@ -1,4 +1,4 @@
-# Smart Financial Data Normalizer
+# Smart Financial Parser
 
 A robust CLI tool that ingests messy financial transaction data and standardizes it into clean, structured insights.
 

@@ -1,23 +1,32 @@
-date,merchant,amount,category
-2025-12-05,Uber,12.0,Transport
-2025-11-30,Unknown,15.5,Other
-2025-12-12,Starbucks,5.0,Food & Dining
-2025-12-02,Uber Eats,-8.99,Transport
-2025-12-03,Amazon,120.0,Shopping
-2025-12-04,Pizza Town 🍕,10.0,Food & Dining
-2025-11-29,Starbucks,4.5,Food & Dining
-2025-12-08,Uber,14.0,Transport
-2025-11-15,Random Store,42.0,Other
-2025-12-07,Unknown,7.99,Other
-2025-12-01,Amazon,35.15,Shopping
-2025-11-29,Unknown,22.22,Other
-Unknown,Unknown,0.0,Other
-2023-05-13,Pizza Town 🍕,10.0,Food & Dining
-2023-03-07,Uber,33.0,Transport
-2023-01-02,Uber Eats,-15.0,Transport
-2023-01-01,Uber,24.99,Transport
-2023-01-01,Uber,13.42,Transport
-Unknown,Unknown Merchant,100.0,Other
-2024-04-06,McDonald's,20.0,Food & Dining
-2025-12-06,Trader Joe's,49.99,Grocery
-2023-03-05,Starbucks,5.4,Food & Dining
+date,merchant,normalized_amount,currency,category
+2025-12-06,Uber,12.0,USD,Transport
+2025-11-30,Unknown,15.5,USD,Other
+2025-12-12,Starbucks,5.0,USD,Food & Dining
+2025-12-02,Uber Eats,-8.99,USD,Food & Dining
+2025-12-03,Amazon,120.0,USD,Shopping
+2025-12-04,Pizza Town,10.0,USD,Food & Dining
+2025-11-30,Starbucks,4.5,USD,Food & Dining
+2025-12-09,Uber,14.0,USD,Transport
+2025-11-16,Random Store,42.0,USD,Other
+2025-12-08,Unknown,7.99,USD,Other
+2025-12-01,Amazon,35.15,USD,Shopping
+2025-12-06,Unknown,22.22,USD,Other
+Unknown,Unknown,0.0,USD,Other
+2023-05-13,Pizza Town,10.0,EUR,Food & Dining
+2023-03-07,Uber,33.0,USD,Transport
+2023-01-02,Uber Eats,-15.0,USD,Food & Dining
+2023-01-01,Uber,24.99,USD,Transport
+2023-01-01,Uber,13.42,USD,Transport
+Unknown,Unknown Merchant,100.0,USD,Other
+2024-04-07,McDonald's,20.0,USD,Food & Dining
+2025-12-07,Trader Joe's,49.99,USD,Grocery
+2023-03-05,Starbucks,5.4,USD,Food & Dining
+2023-03-05,Starbucks,5.4,USD,Food & Dining
+2023-03-05,Starbucks,5.4,INR,Food & Dining
+2023-03-05,Starbucks,5.4,EUR,Food & Dining
+2023-03-05,Starbucks,0.0,USD,Food & Dining
+Unknown,Unknown,0.0,USD,Other
+2025-05-05,Unknown,0.0,USD,Other
+Unknown,Unknown,0.0,USD,Other
+2025-05-05,Unknown,0.0,USD,Other
+2025-12-10,Unknown,0.0,USD,Other

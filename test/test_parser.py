@@ -76,3 +76,23 @@ def test_apply_category():
     assert apply_category("AMC Theatres") == "Entertainment"
     assert apply_category("Whole Foods Market") == "Grocery"
     assert apply_category("Random Boutique") == "Other"
+
+def test_currency_extraction_and_normalized_amount():
+    df = pd.DataFrame({
+        "date": ["2023-03-05", "2023-03-05", "2023-03-05"],
+        "merchant": ["Starbucks", "Starbucks", "Starbucks"],
+        "amount": ["€5.40", "USD 10.00", "₹250"]
+    })
+
+    clean_df = normalize_transactions(df)
+
+    # Check normalized numeric amounts
+    assert clean_df["normalized_amount"].tolist() == [5.40, 10.00, 250.00]
+
+    # Check detected currencies
+    assert clean_df["currency"].tolist() == ["EUR", "USD", "INR"]
+
+    # Ensure pipeline structure remains correct
+    assert list(clean_df.columns) == [
+        "date", "merchant", "normalized_amount", "currency", "category"
+    ]

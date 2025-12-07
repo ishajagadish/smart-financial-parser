@@ -29,14 +29,27 @@ def main():
     clean_df = normalize_transactions(df)
     clean_df.to_csv(output_path, index=False)
 
-    summary = compute_top_category(clean_df)
-
     print("\n=== Cleaned Data Saved ===")
     print(f"Output: {output_path}")
 
     print("\n=== Spending Summary ===")
-    print(f"Top Category: {summary['category']}")
-    print(f"Total Spent: ${summary['total_spent']}\n")
+    if clean_df.empty:
+        print("No valid spending data available.\n")
+        return
+
+    # Group by currency and compute stats per group
+    for currency, group_df in clean_df.groupby("currency"):
+        summary = compute_top_category(group_df)
+
+        if summary["category"]:
+            print(f"\nCurrency: {currency}")
+            print(f" ▸ Top Category: {summary['category']}")
+            print(f" ▸ Total Spent: {summary['total_spent']}")
+        else:
+            print(f"\nCurrency: {currency}")
+            print(" ▸ No valid spending data in this currency")
+
+    print()
 
 if __name__ == "__main__":
     main()

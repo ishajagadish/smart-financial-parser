@@ -10,22 +10,66 @@ This project solves the challenge of normalizing **inconsistent** transaction da
 
 ---
 
-## Features
+## Key Features
 
-| Capability | Examples | Benefit |
-|----------|-----------|---------|
-| Natural-language date parsing | "last Sunday", "in 2 days" | End-user friendly inputs |
-| Multi-format date parsing | `13.05.23`, `3-7-2023` | International support |
-| Currency cleaning | `$12?` → `12.0` | Removes noise safely |
-| Merchant normalization | "UBER *TRIP" → "Uber" | Canonical grouping for analytics |
-| Auto-category mapping | Uber → Transport | Immediate insights |
-| Safe handling of malformed data | Unknown fields preserved | No crashes, auditable pipeline |
-| Scalable category classification | AMC → Entertainment, Whole Foods → Grocery | Required for “Top Spending Category” analytics; rule-based and easy to extend |
+| Capability | Examples it can handle | Why it matters |
+|----------|----------------------|----------------|
+| Natural-language date parsing | `"last Sunday"`, `"in 2 days"`, `"next Friday"` | Human-friendly input support |
+| Multi-format date parsing | `13.05.23`, `3-7-2023`, `April 2024` | Global support |
+| Currency extraction | `$10`, `€5.4`, `INR 200`, `GBP 3.00` | Detects & preserves currency |
+| Numeric normalization | `"$$5.00"` → `5.0` | Removes noise & symbols |
+| Merchant normalization | `"UBER *TRIP"` → `Uber` | Enables grouping analytics |
+| Category classification | Whole Foods → Grocery | Business insights enabled |
+| Error-safe defaults | Invalid dates → `"Unknown"` | Reliable in messy real data |
+
+⚙ Supported currencies today: **USD, EUR, INR, GBP, CAD**  (Easily extendable)
 
 🛡️ Cybersecurity mindset: **Never drop data**, always preserve visibility.
 
+Designed with data lineage & auditability in mind, essential for compliance-driven environments like cybersecurity and finance.
+
 ---
 
+## 📊 Output Schema
+
+| Column | Description |
+|--------|-------------|
+| `date` | Normalized YYYY-MM-DD or `"Unknown"` |
+| `merchant` | Canonical merchant name |
+| `normalized_amount` | Numeric spend value |
+| `currency` | Extracted currency code |
+| `category` | Rule-based spend classification |
+
+## 📄 Sample Input/Output
+
+### Sample Input (raw CSV)
+```bash
+date,merchant,amount
+
+Yesterday,Uber Ride,$12?
+
+last Sunday,,15.50
+
+3-7-2023,AMZN Mktp US*AB12,$120.00
+
+April 2024,MCDONALD’S #03944,20.00
+
+2023/03/05,Starbucks ☕ Cafe, €5.4
+```
+### Sample Output
+```bash
+date,merchant,normalized_amount,currency,category
+
+2025-12-04,Uber,12.0,USD,Transport
+
+2025-11-30,Unknown,15.5,USD,Other
+
+2023-03-07,Amazon,120.0,USD,Shopping
+
+2024-04-01,McDonald's,20.0,USD,Food & Dining
+
+2023-03-05,Starbucks,5.4,EUR,Food & Dining
+```
 ## 📦 Installation
 
 ```bash
@@ -48,9 +92,11 @@ python3 -m pytest -q
 
 CLI also prints Spending Summary, for ex:
 ```bash
-Top category: Shopping
-Total Spent: $120.00
+Currency: USD
+▸ Top category: Shopping
+▸ Total Spent: 120.00
 ```
+If multiple currencies exist, top spending is computed per currency and USD is reported by default for now (extendable).
 
 ## 🧠 Methodology
 

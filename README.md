@@ -73,7 +73,7 @@ date,merchant,normalized_amount,currency,category
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/<your-username>/smart-financial-parser.git
+git clone https://github.com/ishajagadish/smart-financial-parser
 cd smart-financial-parser
 pip3 install -r requirements.txt
 ```
